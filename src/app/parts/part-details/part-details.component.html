@@ -1,10 +1,11 @@
-<form>
+<form [formGroup]="partForm">
 
   <div class="form-group row">
     <label for="part-type" class="col-lg-2 col-form-label">Type</label>
     <div class="col-lg-10">
       <select class="form-control" id="part-type" name="part-type"
-              [(ngModel)]="part.type">
+              formControlName="type">
+        <option [ngValue]="null">Please Select a Type</option>
         <option *ngFor="let type of partTypes" [ngValue]="type">
           {{type}}
         </option>
@@ -12,14 +13,16 @@
     </div>
   </div>
 
-  <div class="form-group" [ngSwitch]="part.type">
+  <div class="form-group"
+       [ngSwitch]="part.type"
+       formGroupName="content">
 
     <div class="row" *ngSwitchCase="'code'">
       <label for="part-content-code" class="col-lg-2 col-form-label">Code</label>
       <div class="col-lg-10">
         <textarea class="form-control" id="part-content-code" rows="10"
                   name="content"
-                  [(ngModel)]="part.content.code"></textarea>
+                  formControlName="code"></textarea>
       </div>
     </div>
 
@@ -28,7 +31,7 @@
       <div class="col-lg-10">
         <textarea class="form-control" id="part-content-text" rows="10"
                   name="content"
-                  [(ngModel)]="part.content.text"></textarea>
+                  formControlName="text"></textarea>
       </div>
     </div>
 
@@ -37,7 +40,7 @@
       <div class="col-lg-10">
         <input class="form-control" type="text" id="part-content-video"
                name="content"
-               [(ngModel)]="part.content.video">
+               formControlName="video">
       </div>
     </div>
 

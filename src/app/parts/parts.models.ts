@@ -1,13 +1,11 @@
 export type PartType = 'code' | 'text' | 'video';
 
-export type PartContent = string | {code?: string, text?: string, video?: string};
-
 export class Part {
-  _id: string;
-  content: PartContent;
+  _id?: string;
+  content: string;
   type: PartType;
   
-  constructor(type: PartType, content: PartContent) {
+  constructor(type: PartType, content: string) {
     this.type    = type;
     this.content = content;
   }
