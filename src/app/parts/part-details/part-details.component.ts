@@ -1,44 +1,63 @@
 import * as _ from 'lodash';
-import { Component, OnInit, Input } from '@angular/core';
-import { Part, PartTypes } from '../parts.models'
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnChanges, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Part, PartTypes, PartType } from '../parts.models'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector   : 'part-details',
   templateUrl: './part-details.component.html',
   styleUrls  : ['./part-details.component.sass']
 })
-export class PartDetailsComponent implements OnInit {
+export class PartDetailsComponent implements OnChanges, OnInit {
   @Input() part: Part;
   
   partForm: FormGroup;
-  partTypes = PartTypes;
+  partTypes: PartType[];
   
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(formBuilder: FormBuilder) {
+    this.part = new Part();
+    this.partTypes = PartTypes;
+    this.partForm = formBuilder.group({
+      type   : ['', Validators.required],
+      content: formBuilder.group({
+        code : '',
+        text : '',
+        video: ''
+      })
+    }, {'validator': this.partValidator});
+  }
+  
+  ngOnChanges(changes: SimpleChanges) {
+    this.setPartForm(this.partForm, this.partTypes, changes['part'].currentValue);
+    this.setPart(changes['part'].currentValue, this.partForm.value);
+  }
   
   ngOnInit() {
-    // create partForm, listen its changes and setPart
-    this.partForm = this.buildPartForm(this.part);
-    this.partForm.valueChanges.subscribe(this.setPart);
+    this.partForm.valueChanges.subscribe(value => this.setPart(this.part, value));
   }
   
-  buildPartForm(part) {
-    // add contents for each type and set current content
-    let contentGroup = {};
-    _.forEach(this.partTypes, function (type) {
-      contentGroup[type] = type === part.type ? [part.content] : []
-    });
-    
-    return this.formBuilder.group({
-      type   : [part.type],
-      content: this.formBuilder.group(contentGroup)
-    });
+  /** PRIVATE FUNCTIONS*/
+  
+  partValidator(contentGroup: FormGroup) {
+    return contentGroup.value.type && contentGroup.get('content').get(contentGroup.value.type).value ? null : {'missing-content': true};
   }
   
-  setPart(partForm) {
-    if (this.part.type !== partForm.type) {
-      this.part.type = partForm.type;
+  setPartForm(partForm: FormGroup, partTypes: PartType[], part: Part) {
+    // add contents for each type
+    let contentGroup = _.reduce(partTypes, (contentGroup, type) => {
+      contentGroup[type] = part.type === type ? part.content : '';
+      return contentGroup
+    }, {});
+    // set values to partForm
+    partForm.setValue({type: part.type || '', content: contentGroup});
+    return partForm;
+  }
+  
+   setPart(part: Part, value): Part {
+    if (part.type !== value.type) {
+      part.type = value.type;
     }
-    this.part.content = partForm.content[partForm.type];
+    part.content = value.content[value.type];
+    return part;
   }
 }

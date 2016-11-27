@@ -1,49 +1,61 @@
-<form [formGroup]="partForm">
+<div class="card card-block" [ngClass]="{'valid-card': partForm.valid}">
+  <form [formGroup]="partForm">
 
-  <div class="form-group row">
-    <label for="part-type" class="col-lg-2 col-form-label">Type</label>
-    <div class="col-lg-10">
+    <div class="form-group" [ngClass]="{'has-danger': partForm.controls.type.errors}">
+      <label class="form-control-label" for="part-type">Part Type</label>
       <select class="form-control" id="part-type" name="part-type"
+              [ngClass]="{'form-control-danger': partForm.controls.type.errors}"
               formControlName="type">
-        <option [ngValue]="null">Please Select a Type</option>
-        <option *ngFor="let type of partTypes" [ngValue]="type">
-          {{type}}
-        </option>
+        <option *ngIf="!part.type" value="">Please Select a Type</option>
+        <option *ngFor="let type of partTypes" [ngValue]="type">{{type}}</option>
       </select>
+      <div class="form-control-feedback" *ngIf="partForm.controls.type.errors">
+        You should select a content type...
+      </div>
     </div>
-  </div>
 
-  <div class="form-group"
-       [ngSwitch]="part.type"
-       formGroupName="content">
+    <div class="form-group"
+         [ngSwitch]="part.type"
+         formGroupName="content">
 
-    <div class="row" *ngSwitchCase="'code'">
-      <label for="part-content-code" class="col-lg-2 col-form-label">Code</label>
-      <div class="col-lg-10">
-        <textarea class="form-control" id="part-content-code" rows="10"
-                  name="content"
+      <div class="form-group"
+           [ngClass]="{'has-danger': partForm.errors}"
+           *ngSwitchCase="'code'">
+        <label class="form-control-label" for="part-content-code">Code Content</label>
+        <textarea class="form-control" id="part-content-code" name="content" rows="10"
+                  [ngClass]="{'form-control-danger': partForm.errors}"
                   formControlName="code"></textarea>
+        <div class="form-control-feedback" *ngIf="partForm.controls.type.errors">
+          This field is required...
+        </div>
       </div>
-    </div>
 
-    <div class="row" *ngSwitchCase="'text'">
-      <label for="part-content-text" class="col-lg-2 col-form-label">Text</label>
-      <div class="col-lg-10">
-        <textarea class="form-control" id="part-content-text" rows="10"
-                  name="content"
+      <div class="form-group"
+           [ngClass]="{'has-danger': partForm.errors}"
+           *ngSwitchCase="'text'">
+        <label class="form-control-label" for="part-content-text">Text Content</label>
+        <textarea class="form-control" id="part-content-text" name="content" rows="10"
+                  [ngClass]="{'form-control-danger': partForm.errors}"
                   formControlName="text"></textarea>
+        <div class="form-control-feedback" *ngIf="partForm.controls.type.errors">
+          This field is required...
+        </div>
       </div>
-    </div>
 
-    <div class="row" *ngSwitchCase="'video'">
-      <label for="part-content-video" class="col-lg-2 col-form-label">Youtube Url</label>
-      <div class="col-lg-10">
-        <input class="form-control" type="text" id="part-content-video"
-               name="content"
+      <div class="form-group"
+           [ngClass]="{'has-danger': partForm.errors}"
+           *ngSwitchCase="'video'">
+        <label class="form-control-label" for="part-content-video">Youtube Url</label>
+        <input class="form-control" id="part-content-video" name="content" type="text"
+               [ngClass]="{'form-control-danger': partForm.errors}"
                formControlName="video">
+        <div class="form-control-feedback" *ngIf="partForm.controls.type.errors">
+          This field is required...
+        </div>
       </div>
+
     </div>
 
-  </div>
+  </form>
 
-</form>
+</div>

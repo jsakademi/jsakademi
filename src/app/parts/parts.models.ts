@@ -5,7 +5,7 @@ export class Part {
   content: string;
   type: PartType;
   
-  constructor(type: PartType, content: string) {
+  constructor(type?: PartType, content?: string) {
     this.type    = type;
     this.content = content;
   }
