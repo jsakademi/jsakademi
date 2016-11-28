@@ -1,0 +1,57 @@
+<div class="card card-block" [ngClass]="{'valid-part': partForm.valid, 'invalid-part': partForm.invalid}">
+  <form [formGroup]="partForm">
+
+    <div class="form-group" [ngClass]="partForm.controls.type.errors ?'has-danger' : 'has-success'">
+      <label class="form-control-label" for="part-type">Part Type</label>
+      <select class="form-control" id="part-type" name="part-type"
+              formControlName="type">
+        <option *ngIf="!part.type" value="">Please Select a Type</option>
+        <option *ngFor="let type of partTypes" [ngValue]="type">{{type}}</option>
+      </select>
+      <div class="form-control-feedback" *ngIf="partForm.controls.type.errors">
+        You should select a content type...
+      </div>
+    </div>
+
+    <div class="form-group"
+         [ngSwitch]="part.type"
+         formGroupName="content">
+
+      <div class="form-group"
+           [ngClass]="partForm.errors ?'has-danger' : 'has-success'"
+           *ngSwitchCase="'code'">
+        <label class="form-control-label" for="part-content-code">Code Content</label>
+        <textarea class="form-control" id="part-content-code" name="content" rows="10"
+                  formControlName="code"></textarea>
+        <div class="form-control-feedback" *ngIf="partForm.errors">
+          You should enter some codes...
+        </div>
+      </div>
+
+      <div class="form-group"
+           [ngClass]="partForm.errors ?'has-danger' : 'has-success'"
+           *ngSwitchCase="'text'">
+        <label class="form-control-label" for="part-content-text">Text Content</label>
+        <textarea class="form-control" id="part-content-text" name="content" rows="10"
+                  formControlName="text"></textarea>
+        <div class="form-control-feedback" *ngIf="partForm.errors">
+          You should enter some text...
+        </div>
+      </div>
+
+      <div class="form-group"
+           [ngClass]="partForm.errors ?'has-danger' : 'has-success'"
+           *ngSwitchCase="'video'">
+        <label class="form-control-label" for="part-content-video">Youtube Url</label>
+        <input class="form-control" id="part-content-video" name="content" type="text"
+               formControlName="video">
+        <div class="form-control-feedback" *ngIf="partForm.errors">
+          You should enter a youtube url...
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+
+</div>

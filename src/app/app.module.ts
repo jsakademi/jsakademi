@@ -5,18 +5,22 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { MaterialModule } from "@angular/material";
+import { PartsModule } from "./parts/parts.module";
 
 @NgModule({
   declarations: [
     AppComponent
   ],
-  imports: [
+  imports     : [
     BrowserModule,
     FormsModule,
     HttpModule,
-    MaterialModule.forRoot()
+    MaterialModule.forRoot(),
+    // sub modules
+    PartsModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers   : [],
+  bootstrap   : [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

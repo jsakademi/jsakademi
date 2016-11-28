@@ -2,6 +2,7 @@
 
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { PartsModule } from './parts/parts.module';
 
 describe('App: Jsakademi', () => {
   beforeEach(() => {
@@ -9,6 +10,9 @@ describe('App: Jsakademi', () => {
       declarations: [
         AppComponent
       ],
+      imports: [
+        PartsModule
+      ]
     });
   });
 
