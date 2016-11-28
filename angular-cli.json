@@ -19,6 +19,7 @@
       "mobile": false,
       "styles": [
         "../node_modules/bootstrap/dist/css/bootstrap.css",
+        "../node_modules/highlight.js/styles/darkula.css",
         "styles.scss"
       ],
       "scripts": [
@@ -36,6 +37,7 @@
   "addons": [
   ],
   "packages": [
+    "../node_modules/angular2-highlight-js/lib"
   ],
   "e2e": {
     "protractor": {

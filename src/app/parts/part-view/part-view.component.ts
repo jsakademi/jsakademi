@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Part } from '../parts.models';
 
 @Component({
   selector: 'part-view',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./part-view.component.scss']
 })
 export class PartViewComponent implements OnInit {
+  @Input() part: Part;
 
   constructor() { }
 
