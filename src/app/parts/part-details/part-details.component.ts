@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector   : 'part-details',
   templateUrl: './part-details.component.html',
-  styleUrls  : ['./part-details.component.sass']
+  styleUrls  : ['part-details.component.scss']
 })
 export class PartDetailsComponent implements OnChanges, OnInit {
   @Input() part: Part;

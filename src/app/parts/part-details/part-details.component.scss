@@ -1,0 +1,9 @@
+@import "~bootstrap/scss/variables";
+
+:host .valid-part {
+  border: $border-width solid $brand-success
+}
+
+.invalid-part {
+  border: $border-width solid $brand-danger
+}
