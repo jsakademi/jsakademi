@@ -1,1 +1,7 @@
-<section *ngIf="part.type === 'code'" [innerHTML]="part.content" highlight-js-content=".highlight"></section>
+<div *ngIf="part.type === 'code'" [innerHTML]="part.content" highlight-js-content=".highlight"></div>
+<div *ngIf="part.type === 'text'">
+  <p>{{part.content}}</p>
+</div>
+<div class="embed-responsive embed-responsive-16by9" *ngIf="part.type === 'video'">
+  <iframe class="embed-responsive-item" [src]="part.content | youtubeSafeUrl" allowfullscreen></iframe>
+</div>

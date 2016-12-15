@@ -2,10 +2,34 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-6">
-      <part-details [part]="part"></part-details>
+      <part-details [part]="selectedPart"></part-details>
+      <button class="btn btn-primary" (click)="getParts()">Get</button>
+      <button class="btn btn-primary" *ngIf="!selectedPart._id" (click)="createPart(selectedPart)">Create</button>
+      <button class="btn btn-primary" *ngIf="selectedPart._id" (click)="updatePart(selectedPart)">Update</button>
+      <button class="btn btn-danger" *ngIf="selectedPart._id" (click)="deletePart(selectedPart)">Delete</button>
     </div>
     <div class="col-xs-6">
-      <part-view [part]="part"></part-view>
+      <div class="list-group">
+        <button type="button" class="list-group-item list-group-item-action"
+                *ngFor="let part of parts; let index = index;"
+                [ngClass]="{'active': selectedPart._id === part._id}"
+                (click)="selectPart(part)">
+          {{part.type}} - {{part.content | slice:0:10}}
+        </button>
+        <button type="button" class="list-group-item list-group-item-action"
+                (click)="selectPart({})">
+          New Part
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <div class="col-xs-12">
+        <part-view *ngFor="let part of parts"
+                   [part]="part">
+        </part-view>
+      </div>
     </div>
   </div>
 </div>
